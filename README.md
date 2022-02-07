@@ -19,4 +19,5 @@ File->Settings->Project:TGBot->Python Interpreter
 3. Откройте файл requirements.txt
 4. Запустите каждую команду из файла requirements.txt в терминале PyCharm
 
-@todo #1 Запуск проекта
+## Запуск проекта
+Если все предыдущие шаги были выполнены правильно, то с городстью можете нажать на зеленую кнопку(находится справа сверху). <span style="color:red">PROFIT!!!</span>
