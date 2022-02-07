@@ -1,0 +1,17 @@
+reviewers:
+  groups:
+# code owners
+    TGBotGroup:
+      - Bopemt
+      - fedniko
+      - VasilevSaryal
+      - SaryalVasilyev
+      - PetrovEgor
+
+files:
+# Project
+  '/**':
+    - TGBotGroup
+
+options:
+  enable_group_assignment: true
