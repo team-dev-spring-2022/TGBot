@@ -1,4 +1,3 @@
-import config
 import logging
 import asyncio
 from aiogram import Bot, Dispatcher, executor, types
@@ -9,8 +8,7 @@ from aiogram.utils.markdown import text
 logging.basicConfig(level=logging.INFO)
 
 # инициализируем бота
-bot = Bot(token=config.TG_TOKEN)
-dp = Dispatcher(bot)
+# @todo #9 добавить токен от BotFather и инициалзировать бота
 
 
 # команда \help
