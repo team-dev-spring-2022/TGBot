@@ -1,5 +1,5 @@
 name: code review
-
+# @todo #16 проверить нужен ли он
 on:
   pull_request:
     types: [opened, ready_for_review, reopened]
