@@ -1,4 +1,4 @@
-from aiogram import Bot, Dispatcher, executor
+from aiogram import Bot, Dispatcher, executor, types
 import config
 import logging
 from strings import help_command, help_text
