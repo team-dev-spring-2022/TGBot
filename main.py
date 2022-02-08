@@ -1,6 +1,7 @@
-import logging
 from aiogram import Bot, Dispatcher, executor
 import config
+import logging
+from strings import help_command, help_text
 
 
 # задаем уровень логов
@@ -12,7 +13,9 @@ dp = Dispatcher(bot)
 
 
 # команда \help
-# @todo #2 сделать команду help
+@dp.message_handler(commands=[help_command])
+async def cmd_reminder_on(message: types.Message):
+    await message.answer(help_text)
 
 
 # запускаем лонг поллинг
