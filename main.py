@@ -1,8 +1,6 @@
-import config
 import logging
-import asyncio
-from aiogram import Bot, Dispatcher, executor, types
-from aiogram.utils.markdown import text
+from aiogram import Bot, Dispatcher, executor
+import config
 
 
 # задаем уровень логов
