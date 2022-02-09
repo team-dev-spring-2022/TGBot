@@ -17,6 +17,7 @@ dp = Dispatcher(bot)
 async def cmd_reminder_on(message: types.Message):
     await message.answer(help_text)
 
+# @todo #3 Сделать команду активации цикличного напоминания (с определенным промежутком времени) о заполнении Google Calendar и Trello.
 
 # запускаем лонг поллинг
 if __name__ == '__main__':
