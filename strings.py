@@ -1,7 +1,7 @@
 from aiogram.utils.markdown import text, bold
 
-help_command = 'help'
-help_text = text('**Это помощь :D**')
+HELP_COMMAND = 'help'
+HELP_TEXT = text('**Это помощь :D**')
 
 
 class Reminder:

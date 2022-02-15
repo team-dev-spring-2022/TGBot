@@ -1,1 +1,1 @@
-pip install aiogram
+aiogram==2.19
