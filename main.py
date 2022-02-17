@@ -1,8 +1,8 @@
+import asyncio
+import logging
 from aiogram import Bot, Dispatcher, executor, types
 import config
-import logging
-import asyncio
-from strings import help_command, help_text, reminders_start
+from strings import HELP_COMMAND, HELP_TEXT, reminders_start
 
 
 # задаем уровень логов
@@ -14,9 +14,9 @@ dp = Dispatcher(bot)
 
 
 # команда \help
-@dp.message_handler(commands=[help_command])
-async def cmd_reminder_on(message: types.Message):
-    await message.answer(help_text)
+@dp.message_handler(commands=[HELP_COMMAND])
+async def cmd_help_on(message: types.Message):
+    await message.answer(HELP_TEXT)
 
 
 # МОДУЛЬ 1. Команды для напоминаний
@@ -25,8 +25,8 @@ async def cmd_reminder_on(message: types.Message):
 
 # переменные для хранения состояния включенности уведомлений для Trello и Google Calendar
 # @todo #3 исправить этот костыль в будущем
-is_schedule_reminder = False
-is_homework_reminder = False
+IS_SCHEDULE_REMINDER = False
+IS_HOMEWORK_REMINDER = False
 
 
 # Команды активации цикличного напоминания для Google Calendar и Trello.
@@ -34,26 +34,26 @@ is_homework_reminder = False
 @dp.message_handler(commands=[reminders_start['schedule'].command, reminders_start['homework'].command])
 async def cmd_reminder_on(message: types.Message):
     if message.get_command(pure=True) == reminders_start['schedule'].command:
-        global is_schedule_reminder
-        if is_schedule_reminder:
+        global IS_SCHEDULE_REMINDER
+        if IS_SCHEDULE_REMINDER:
             await message.answer('Уже включено')
             return
         await message.answer(reminders_start['schedule'].description)
-        is_schedule_reminder = True
-        while is_schedule_reminder:
+        IS_SCHEDULE_REMINDER = True
+        while IS_SCHEDULE_REMINDER:
             await asyncio.sleep(config.REMINDER_TIMER)
-            if is_schedule_reminder:
+            if IS_SCHEDULE_REMINDER:
                 await message.answer(reminders_start['schedule'].description)
     elif message.get_command(pure=True) == reminders_start['homework'].command:
-        global is_homework_reminder
-        if is_homework_reminder:
+        global IS_HOMEWORK_REMINDER
+        if IS_HOMEWORK_REMINDER:
             await message.answer('Уже включено')
             return
         await message.answer(reminders_start['homework'].description)
-        is_homework_reminder = True
-        while is_homework_reminder:
+        IS_HOMEWORK_REMINDER = True
+        while IS_HOMEWORK_REMINDER:
             await asyncio.sleep(config.REMINDER_TIMER)
-            if is_homework_reminder:
+            if IS_HOMEWORK_REMINDER:
                 await message.answer(reminders_start['homework'].description)
 
 
