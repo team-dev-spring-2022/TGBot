@@ -19,3 +19,8 @@ reminders_start = {
                                           "Данное сообщение будет повторяться каждые 15 минут.",
                                           "Для отключения необходимо ввести /done_homework", sep='\n'))
 }
+
+reminders_make = {
+    'schedule': Reminder('make_schedule', "За внесения поправок в Google Calendar взялся - "),
+    'homework': Reminder('make_homework', "За внесения изменений в Trello взялся - ")
+}
