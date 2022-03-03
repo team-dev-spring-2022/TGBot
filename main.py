@@ -1,9 +1,10 @@
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher, executor, types
-import config
-from strings import HELP_COMMAND, HELP_TEXT, reminders_start
+from aiogram.utils.markdown import text
 
+import config
+from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_state, ReminderState
 
 # задаем уровень логов
 logging.basicConfig(level=logging.INFO)
@@ -55,6 +56,40 @@ async def cmd_reminder_on(message: types.Message):
             await asyncio.sleep(config.REMINDER_TIMER)
             if IS_HOMEWORK_REMINDER:
                 await message.answer(reminders_start['homework'].description)
+
+
+@dp.message_handler(commands=[reminders_state['schedule'].command, reminders_state['homework'].command])
+async def cmd_reminder_state(message: types.Message):
+    msg_responsible = 'Нет ответственного'
+    if message.get_command(pure=True) == reminders_state['schedule'].command:
+        global IS_SCHEDULE_REMINDER
+        msg = reminders_state['schedule'].description
+        if IS_SCHEDULE_REMINDER:
+            file_name = "responsible_in_schedule.txt"
+            with open(file_name, 'r') as text_file:
+                text_responsible = text_file.read()
+                if text_responsible != '\n':
+                    msg_state = ReminderState.R_DO.description
+                    msg_responsible = f'@{text_responsible}'
+                else:
+                    msg_state = ReminderState.R_TRUE.description
+        else:
+            msg_state = ReminderState.R_FALSE.description
+    elif message.get_command(pure=True) == reminders_state['homework'].command:
+        global IS_HOMEWORK_REMINDER
+        msg = reminders_state['homework'].description
+        if IS_HOMEWORK_REMINDER:
+            file_name = "responsible_in_homework.txt"
+            with open(file_name, 'r') as text_file:
+                text_responsible = text_file.read()
+                if text_responsible != '\n':
+                    msg_state = ReminderState.R_DO.description
+                    msg_responsible = f'@{text_responsible}'
+                else:
+                    msg_state = ReminderState.R_TRUE.description
+        else:
+            msg_state = ReminderState.R_FALSE.description
+    await message.answer(text(msg, msg_state, msg_responsible, sep='\n'))
 
 
 # @todo #3 сделать команды для завершения цикличного таймера напоминаний для Google Calendar и Trello
