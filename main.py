@@ -59,7 +59,7 @@ async def cmd_reminder_on(message: types.Message):
                 await message.answer(reminders_start['homework'].description)
 
 
-# Команда просмотра состояния для Google Calendar и Trello.                
+# Команда просмотра состояния для Google Calendar и Trello.
 @dp.message_handler(commands=[reminders_state['schedule'].command, reminders_state['homework'].command])
 async def cmd_reminder_state(message: types.Message):
     msg_responsible = 'Нет ответственного'
@@ -93,7 +93,7 @@ async def cmd_reminder_state(message: types.Message):
             msg_state = ReminderState.R_FALSE.description
     await message.answer(text(msg, msg_state, msg_responsible, sep='\n'))
 
-    
+
 # Команда деактивации цикличного уведомления для Google Calendar и Trello.
 @dp.message_handler(commands=[reminders_stop['schedule'].command, reminders_stop['homework'].command])
 async def cmd_reminder_off(message: types.Message):
