@@ -38,6 +38,12 @@ reminders_state = {
 }
 
 
+reminders_make = {
+    'schedule': Reminder('make_schedule', "За внесения поправок в Google Calendar взялся - "),
+    'homework': Reminder('make_homework', "За внесения изменений в Trello взялся - ")
+}
+
+
 reminders_stop = {
     'schedule': Reminder('done_schedule', text("Google Calendar:",
                                                "Повтор напоминаний отключен.", sep='\n')),

@@ -4,7 +4,8 @@ import logging
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.markdown import text
 import config
-from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_stop, reminders_state, ReminderState
+from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_stop, reminders_state, reminders_make,\
+    ReminderState
 
 
 # задаем уровень логов
@@ -92,6 +93,29 @@ async def cmd_reminder_state(message: types.Message):
         else:
             msg_state = ReminderState.R_FALSE.description
     await message.answer(text(msg, msg_state, msg_responsible, sep='\n'))
+
+
+# Команда за взятие ответственночти изменений для Google Calendar и Trello.
+@dp.message_handler(commands=[reminders_make['schedule'].command, reminders_make['homework'].command])
+async def cmd_reminder_make(message: types.Message):
+    if message.get_command(pure=True) == reminders_make['schedule'].command:
+        global IS_SCHEDULE_REMINDER
+        if not IS_SCHEDULE_REMINDER:
+            await message.answer('Нет необходимости в изменении')
+            return
+        file_name = 'responsible_in_schedule.txt'
+        await message.answer(text('Благодарю! ', reminders_make['schedule'].description,
+                                  f'@{message.from_user.username}'))
+    elif message.get_command(pure=True) == reminders_make['homework'].command:
+        global IS_HOMEWORK_REMINDER
+        if not IS_HOMEWORK_REMINDER:
+            await message.answer('Нет необходимости в изменении')
+            return
+        file_name = 'responsible_in_homework.txt'
+        await message.answer(text('Благодарю! ', reminders_make['homework'].description,
+                                  f'@{message.from_user.username}'))
+    with io.open(file_name, 'w', encoding='utf8') as text_file:
+        print(message.from_user.username, file=text_file)
 
 
 # Команда деактивации цикличного уведомления для Google Calendar и Trello.
