@@ -31,7 +31,16 @@ reminders_start = {
                                           "Для отключения необходимо ввести /done_homework", sep='\n'))
 }
 
+
 reminders_state = {
     'schedule': Reminder('is_schedule', "Состояние Google Calendar:"),
     'homework': Reminder('is_homework', "Состояние Trello:")
+}
+
+
+reminders_stop = {
+    'schedule': Reminder('done_schedule', text("Google Calendar:",
+                                               "Повтор напоминаний отключен.", sep='\n')),
+    'homework': Reminder('done_homework', text("Trello:",
+                                               "Повтор напоминаний отключен.", sep='\n'))
 }

@@ -3,9 +3,9 @@ import io
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.markdown import text
-
 import config
-from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_state, ReminderState
+from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_stop, reminders_state, ReminderState
+
 
 # задаем уровень логов
 logging.basicConfig(level=logging.INFO)
@@ -59,6 +59,7 @@ async def cmd_reminder_on(message: types.Message):
                 await message.answer(reminders_start['homework'].description)
 
 
+# Команда просмотра состояния для Google Calendar и Trello.                
 @dp.message_handler(commands=[reminders_state['schedule'].command, reminders_state['homework'].command])
 async def cmd_reminder_state(message: types.Message):
     msg_responsible = 'Нет ответственного'
@@ -92,8 +93,28 @@ async def cmd_reminder_state(message: types.Message):
             msg_state = ReminderState.R_FALSE.description
     await message.answer(text(msg, msg_state, msg_responsible, sep='\n'))
 
-
-# @todo #3 сделать команды для завершения цикличного таймера напоминаний для Google Calendar и Trello
+    
+# Команда деактивации цикличного уведомления для Google Calendar и Trello.
+@dp.message_handler(commands=[reminders_stop['schedule'].command, reminders_stop['homework'].command])
+async def cmd_reminder_off(message: types.Message):
+    if message.get_command(pure=True) == reminders_stop['schedule'].command:
+        global IS_SCHEDULE_REMINDER
+        if not IS_SCHEDULE_REMINDER:
+            await message.answer("Напоминание в Google Calendar не включено")
+            return
+        IS_SCHEDULE_REMINDER = False
+        await message.answer(reminders_stop['schedule'].description)
+        file_name = 'responsible_in_schedule.txt'
+    elif message.get_command(pure=True) == reminders_stop['homework'].command:
+        global IS_HOMEWORK_REMINDER
+        if not IS_HOMEWORK_REMINDER:
+            await message.answer("Напоминание в Trello не включено")
+            return
+        IS_HOMEWORK_REMINDER = False
+        await message.answer(reminders_stop['homework'].description)
+        file_name = 'responsible_in_homework.txt'
+    with io.open(file_name, 'w', encoding='utf8') as text_file:
+        print(file=text_file)
 
 
 # запускаем лонг поллинг
