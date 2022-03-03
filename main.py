@@ -28,7 +28,6 @@ async def cmd_help_on(message: types.Message):
 # @todo #3 исправить этот костыль в будущем
 IS_SCHEDULE_REMINDER = False
 IS_HOMEWORK_REMINDER = False
-FILE_NAME = ''
 
 
 # Команды активации цикличного напоминания для Google Calendar и Trello.
@@ -62,7 +61,7 @@ async def cmd_reminder_on(message: types.Message):
 @dp.message_handler(commands=[reminders_stop['schedule'].command, reminders_stop['homework'].command])
 async def cmd_reminder_off(message: types.Message):
     if message.get_command(pure=True) == reminders_stop['schedule'].command:
-        global IS_SCHEDULE_REMINDER, file_name
+        global IS_SCHEDULE_REMINDER
         if not IS_SCHEDULE_REMINDER:
             await message.answer("Напоминание в Google Calendar не включено")
             return
