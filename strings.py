@@ -1,7 +1,18 @@
+from enum import Enum
 from aiogram.utils.markdown import text, bold
+
 
 HELP_COMMAND = 'help'
 HELP_TEXT = text('**Это помощь :D**')
+
+
+class ReminderState(Enum):
+    R_FALSE = 'Не нуждается в изменении'
+    R_DO = 'За изменения взялся'
+    R_TRUE = 'Нужно изменить'
+
+    def __init__(self, description):
+        self.description = description
 
 
 class Reminder:
@@ -19,6 +30,14 @@ reminders_start = {
                                           "Данное сообщение будет повторяться каждые 15 минут.",
                                           "Для отключения необходимо ввести /done_homework", sep='\n'))
 }
+
+
+reminders_state = {
+    'schedule': Reminder('is_schedule', "Состояние Google Calendar:"),
+    'homework': Reminder('is_homework', "Состояние Trello:")
+}
+
+
 reminders_stop = {
     'schedule': Reminder('done_schedule', text("Google Calendar:",
                                                "Повтор напоминаний отключен.", sep='\n')),

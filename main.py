@@ -2,8 +2,9 @@ import asyncio
 import io
 import logging
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.utils.markdown import text
 import config
-from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_stop
+from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_stop, reminders_state, ReminderState
 
 
 # задаем уровень логов
@@ -58,6 +59,42 @@ async def cmd_reminder_on(message: types.Message):
                 await message.answer(reminders_start['homework'].description)
 
 
+# Команда просмотра состояния для Google Calendar и Trello.
+@dp.message_handler(commands=[reminders_state['schedule'].command, reminders_state['homework'].command])
+async def cmd_reminder_state(message: types.Message):
+    msg_responsible = 'Нет ответственного'
+    if message.get_command(pure=True) == reminders_state['schedule'].command:
+        global IS_SCHEDULE_REMINDER
+        msg = reminders_state['schedule'].description
+        if IS_SCHEDULE_REMINDER:
+            file_name = "responsible_in_schedule.txt"
+            with io.open(file_name, 'r', encoding='utf-8') as text_file:
+                text_responsible = text_file.read()
+                if text_responsible != '\n':
+                    msg_state = ReminderState.R_DO.description
+                    msg_responsible = f'@{text_responsible}'
+                else:
+                    msg_state = ReminderState.R_TRUE.description
+        else:
+            msg_state = ReminderState.R_FALSE.description
+    elif message.get_command(pure=True) == reminders_state['homework'].command:
+        global IS_HOMEWORK_REMINDER
+        msg = reminders_state['homework'].description
+        if IS_HOMEWORK_REMINDER:
+            file_name = "responsible_in_homework.txt"
+            with io.open(file_name, 'r', encoding='utf-8') as text_file:
+                text_responsible = text_file.read()
+                if text_responsible != '\n':
+                    msg_state = ReminderState.R_DO.description
+                    msg_responsible = f'@{text_responsible}'
+                else:
+                    msg_state = ReminderState.R_TRUE.description
+        else:
+            msg_state = ReminderState.R_FALSE.description
+    await message.answer(text(msg, msg_state, msg_responsible, sep='\n'))
+
+
+# Команда деактивации цикличного уведомления для Google Calendar и Trello.
 @dp.message_handler(commands=[reminders_stop['schedule'].command, reminders_stop['homework'].command])
 async def cmd_reminder_off(message: types.Message):
     if message.get_command(pure=True) == reminders_stop['schedule'].command:
@@ -78,6 +115,7 @@ async def cmd_reminder_off(message: types.Message):
         file_name = 'responsible_in_homework.txt'
     with io.open(file_name, 'w', encoding='utf8') as text_file:
         print(file=text_file)
+
 
 # запускаем лонг поллинг
 if __name__ == '__main__':
