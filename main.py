@@ -1,4 +1,5 @@
 import asyncio
+import io
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.markdown import text
@@ -66,7 +67,7 @@ async def cmd_reminder_state(message: types.Message):
         msg = reminders_state['schedule'].description
         if IS_SCHEDULE_REMINDER:
             file_name = "responsible_in_schedule.txt"
-            with open(file_name, 'r') as text_file:
+            with io.open(file_name, 'r', encoding='utf-8') as text_file:
                 text_responsible = text_file.read()
                 if text_responsible != '\n':
                     msg_state = ReminderState.R_DO.description
@@ -80,7 +81,7 @@ async def cmd_reminder_state(message: types.Message):
         msg = reminders_state['homework'].description
         if IS_HOMEWORK_REMINDER:
             file_name = "responsible_in_homework.txt"
-            with open(file_name, 'r') as text_file:
+            with io.open(file_name, 'r', encoding='utf-8') as text_file:
                 text_responsible = text_file.read()
                 if text_responsible != '\n':
                     msg_state = ReminderState.R_DO.description

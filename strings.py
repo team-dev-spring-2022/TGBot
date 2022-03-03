@@ -1,5 +1,5 @@
-from aiogram.utils.markdown import text, bold
 from enum import Enum
+from aiogram.utils.markdown import text, bold
 
 
 HELP_COMMAND = 'help'
@@ -7,8 +7,8 @@ HELP_TEXT = text('**Это помощь :D**')
 
 
 class ReminderState(Enum):
-    R_FALSE = 'Не нуждается в изменении',
-    R_DO = 'За изменения взялся',
+    R_FALSE = 'Не нуждается в изменении'
+    R_DO = 'За изменения взялся'
     R_TRUE = 'Нужно изменить'
 
     def __init__(self, description):
@@ -35,4 +35,3 @@ reminders_state = {
     'schedule': Reminder('is_schedule', "Состояние Google Calendar:"),
     'homework': Reminder('is_homework', "Состояние Trello:")
 }
-
