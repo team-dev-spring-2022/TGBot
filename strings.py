@@ -19,3 +19,9 @@ reminders_start = {
                                           "Данное сообщение будет повторяться каждые 15 минут.",
                                           "Для отключения необходимо ввести /done_homework", sep='\n'))
 }
+reminders_stop = {
+    'schedule': Reminder('done_schedule', text("Google Calendar:",
+                                               "Повтор напоминаний отключен.", sep='\n')),
+    'homework': Reminder('done_homework', text("Trello:",
+                                               "Повтор напоминаний отключен.", sep='\n'))
+}
