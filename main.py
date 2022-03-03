@@ -1,4 +1,5 @@
 import asyncio
+import io
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.markdown import text
@@ -67,15 +68,17 @@ async def cmd_reminder_make(message: types.Message):
             await message.answer('Нет необходимости в изменении')
             return
         file_name = 'responsible_in_schedule.txt'
-        await message.answer(text('Благодарю! ', reminders_make['schedule'].description, f'@{message.from_user.username}'))
+        await message.answer(text('Благодарю! ', reminders_make['schedule'].description,
+                                  f'@{message.from_user.username}'))
     elif message.get_command(pure=True) == reminders_make['homework'].command:
         global IS_HOMEWORK_REMINDER
         if not IS_HOMEWORK_REMINDER:
             await message.answer('Нет необходимости в изменении')
             return
         file_name = 'responsible_in_homework.txt'
-        await message.answer(text('Благодарю! ', reminders_make['homework'].description, f'@{message.from_user.username}'))
-    with open(file_name, 'w') as text_file:
+        await message.answer(text('Благодарю! ', reminders_make['homework'].description,
+                                  f'@{message.from_user.username}'))
+    with io.open(file_name, 'w', encoding='utf8') as text_file:
         print(message.from_user.username, file=text_file)
 
 
