@@ -4,7 +4,8 @@ import logging
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.markdown import text
 import config
-from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_stop, reminders_state, reminders_make, ReminderState
+from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_stop, reminders_state, reminders_make,\
+    ReminderState
 
 
 # задаем уровень логов
