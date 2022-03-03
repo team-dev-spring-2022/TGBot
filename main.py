@@ -1,4 +1,5 @@
 import asyncio
+import io
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 import config
@@ -27,6 +28,7 @@ async def cmd_help_on(message: types.Message):
 # @todo #3 исправить этот костыль в будущем
 IS_SCHEDULE_REMINDER = False
 IS_HOMEWORK_REMINDER = False
+FILE_NAME = ''
 
 
 # Команды активации цикличного напоминания для Google Calendar и Trello.
@@ -58,9 +60,9 @@ async def cmd_reminder_on(message: types.Message):
 
 
 @dp.message_handler(commands=[reminders_stop['schedule'].command, reminders_stop['homework'].command])
-async def cmd_reminder_on(message: types.Message):
+async def cmd_reminder_off(message: types.Message):
     if message.get_command(pure=True) == reminders_stop['schedule'].command:
-        global IS_SCHEDULE_REMINDER
+        global IS_SCHEDULE_REMINDER, file_name
         if not IS_SCHEDULE_REMINDER:
             await message.answer("Напоминание в Google Calendar не включено")
             return
@@ -75,7 +77,7 @@ async def cmd_reminder_on(message: types.Message):
         IS_HOMEWORK_REMINDER = False
         await message.answer(reminders_stop['homework'].description)
         file_name = 'responsible_in_homework.txt'
-    with open(file_name, 'w') as text_file:
+    with io.open(file_name, 'w', encoding='utf8') as text_file:
         print(file=text_file)
 
 # запускаем лонг поллинг
