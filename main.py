@@ -34,7 +34,8 @@ IS_HOMEWORK_REMINDER = False
 
 # Команды активации цикличного напоминания для Google Calendar и Trello.
 # @todo #3 сделать ассинхронными потоками без глобальных переменных
-@dp.message_handler(commands=[reminders_start['schedule'].command, reminders_start['homework'].command])
+@dp.message_handler(commands=[reminders_start['schedule'].command,
+                              reminders_start['homework'].command])
 async def cmd_reminder_on(message: types.Message):
     if message.get_command(pure=True) == reminders_start['schedule'].command:
         global IS_SCHEDULE_REMINDER
@@ -61,7 +62,8 @@ async def cmd_reminder_on(message: types.Message):
 
 
 # Команда просмотра состояния для Google Calendar и Trello.
-@dp.message_handler(commands=[reminders_state['schedule'].command, reminders_state['homework'].command])
+@dp.message_handler(commands=[reminders_state['schedule'].command,
+                              reminders_state['homework'].command])
 async def cmd_reminder_state(message: types.Message):
     msg_responsible = 'Нет ответственного'
     if message.get_command(pure=True) == reminders_state['schedule'].command:
@@ -96,7 +98,8 @@ async def cmd_reminder_state(message: types.Message):
 
 
 # Команда за взятие ответственночти изменений для Google Calendar и Trello.
-@dp.message_handler(commands=[reminders_make['schedule'].command, reminders_make['homework'].command])
+@dp.message_handler(commands=[reminders_make['schedule'].command,
+                              reminders_make['homework'].command])
 async def cmd_reminder_make(message: types.Message):
     if message.get_command(pure=True) == reminders_make['schedule'].command:
         global IS_SCHEDULE_REMINDER
@@ -119,7 +122,8 @@ async def cmd_reminder_make(message: types.Message):
 
 
 # Команда деактивации цикличного уведомления для Google Calendar и Trello.
-@dp.message_handler(commands=[reminders_stop['schedule'].command, reminders_stop['homework'].command])
+@dp.message_handler(commands=[reminders_stop['schedule'].command,
+                              reminders_stop['homework'].command])
 async def cmd_reminder_off(message: types.Message):
     if message.get_command(pure=True) == reminders_stop['schedule'].command:
         global IS_SCHEDULE_REMINDER

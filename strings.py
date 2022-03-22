@@ -23,13 +23,20 @@ class Reminder:
 
 # @todo #3 перевести в Enum
 reminders_start = {
-    'schedule': Reminder('schedule', text(f"Необходимо внести изменения в {bold('Google Calendar')}.",
-                                          "Данное сообщение будет повторяться каждые 15 минут.",
-                                          "Для отключения необходимо ввести /done_schedule.", sep='\n')),
-    'homework': Reminder('homework', text("Необходимо внести изменения в Trello.",
-                                          "Данное сообщение будет повторяться каждые 15 минут.",
-                                          "Для отключения необходимо ввести /done_homework", sep='\n'))
-}
+    'schedule': Reminder(
+        'schedule',
+        text(
+            f"Необходимо внести изменения в {bold('Google Calendar')}.",
+            "Данное сообщение будет повторяться каждые 15 минут.",
+            "Для отключения необходимо ввести /done_schedule.",
+            sep='\n')),
+    'homework': Reminder(
+        'homework',
+        text(
+            "Необходимо внести изменения в Trello.",
+            "Данное сообщение будет повторяться каждые 15 минут.",
+            "Для отключения необходимо ввести /done_homework",
+            sep='\n'))}
 
 
 reminders_state = {
@@ -39,14 +46,24 @@ reminders_state = {
 
 
 reminders_make = {
-    'schedule': Reminder('make_schedule', "За внесения поправок в Google Calendar взялся - "),
-    'homework': Reminder('make_homework', "За внесения изменений в Trello взялся - ")
-}
+    'schedule': Reminder(
+        'make_schedule',
+        "За внесения поправок в Google Calendar взялся - "),
+    'homework': Reminder(
+        'make_homework',
+        "За внесения изменений в Trello взялся - ")}
 
 
 reminders_stop = {
-    'schedule': Reminder('done_schedule', text("Google Calendar:",
-                                               "Повтор напоминаний отключен.", sep='\n')),
-    'homework': Reminder('done_homework', text("Trello:",
-                                               "Повтор напоминаний отключен.", sep='\n'))
-}
+    'schedule': Reminder(
+        'done_schedule',
+        text(
+            "Google Calendar:",
+            "Повтор напоминаний отключен.",
+            sep='\n')),
+    'homework': Reminder(
+        'done_homework',
+        text(
+            "Trello:",
+            "Повтор напоминаний отключен.",
+            sep='\n'))}
