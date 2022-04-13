@@ -1,3 +1,4 @@
+﻿.gitignore
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template
 # Byte-compiled / optimized / DLL files
@@ -46,6 +47,7 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+.github/
 
 # Translations
 *.mo

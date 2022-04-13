@@ -1,6 +1,7 @@
-import asyncio
+﻿import asyncio
 import logging
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.bot.api import TelegramAPIServer
 import config
 from strings import HELP_COMMAND, HELP_TEXT, reminders_start
 
@@ -8,10 +9,12 @@ from strings import HELP_COMMAND, HELP_TEXT, reminders_start
 # задаем уровень логов
 logging.basicConfig(level=logging.INFO)
 
+# локальный сервер
+local_server = TelegramAPIServer.from_base('http://localhost')
+
 # инициализируем бота
 bot = Bot(token=config.TG_TOKEN)
 dp = Dispatcher(bot)
-
 
 # команда \help
 @dp.message_handler(commands=[HELP_COMMAND])
