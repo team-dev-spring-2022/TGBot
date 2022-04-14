@@ -3,6 +3,8 @@ import io
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.utils.markdown import text
+from aiogram.bot.api import TelegramAPIServer
+from mock import AsyncMock
 import config
 from strings import HELP_COMMAND, HELP_TEXT, reminders_start, reminders_stop, reminders_state, reminders_make,\
     ReminderState
@@ -143,6 +145,20 @@ async def cmd_reminder_off(message: types.Message):
         print(file=text_file)
 
 
+# Функция для чтения комманд из файла input.txt и отправки их боту.
+async def sendText(_):
+    lines = []
+    with open('input.txt') as f:
+        lines = f.readlines()
+    for line in lines:
+        text = AsyncMock(text=line)
+        await echo(message=text)
+
+
+async def echo(message: types.Message):
+    await message.answer(message.text)
+
+
 # запускаем лонг поллинг
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, skip_updates=True, on_startup=sendText)
